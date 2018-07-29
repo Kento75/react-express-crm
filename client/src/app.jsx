@@ -21,4 +21,4 @@ const App = () => (
         </Provider>
 );
 
-ReactDom.render(<App/>, document.getElementById('react-app'));
+ReactDom.render(<App/>, document.getElementById('root'));
