@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "pgdev",
+    "password": "pgdev",
+    "database": "database_development",
+    "host": "localhost",
+    "dialect": "postgres",
+    "logging": false
+  }
+}
