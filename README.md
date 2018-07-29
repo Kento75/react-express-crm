@@ -8,7 +8,8 @@ $ npm install
 
 Configure the database:
 
-```sh: /config/config.json
+```
+# /config/config.json
 
 "development": {
     "username": "your_db_username",
