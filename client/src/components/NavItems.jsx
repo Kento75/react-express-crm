@@ -1,36 +1,81 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Menu, { MenuItem } from 'material-ui/Menu';
+
+const muiTheme = createMuiTheme();
 
 const NavLinkItem = (props) => (
-    <NavLink exact to={props.to} activeStyle={{fontWeight: 'bold'}}>{props.label}</NavLink>
+    <Link exact to={props.to} style={{textDecorationLine: 'none'}}>{props.label}</Link>
 );
 
 const NavItems = ({ children, user }) => {
-    const { loggedIn, email } = user;
-    
-    return (
-        <div>
-            <div>
-                <NavLinkItem to="/" label="Home" />&mdash;
+  const anchorEl = null;
+  const { loggedIn, email } = user;
+
+  const handleClick = event => {
+    this.anchorEl = event.currentTarget;
+  };
+  
+  const handleClose = () => {
+    this.anchorEl = null;
+  };
+  
+  return (
+    <MuiThemeProvider theme={muiTheme}>
+      <div>
+        <header>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton onClick={handleClick}>
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="title" color="inherit">
+                Title
+              </Typography>
+              <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(true)} onClose={handleClose}>
+                <MenuItem>
+                  <NavLinkItem to="/" label="Home" />
+                </MenuItem>
                 { loggedIn &&
-                <span>
-                    <NavLinkItem to="/protected" label="Protected" />&mdash;
-                    <span>Logged in as {email}</span>&mdash;
-                    <Link to="/logout">Logout</Link>
-                </span>
+                  <span>
+                    <MenuItem>
+                      <NavLinkItem to="/protected" label="Protected" />
+                    </MenuItem>
+                    <MenuItem>
+                      <NavLinkItem to="/protected" label="SUBPAGE1" />
+                      <span>Logged in as {email}</span>
+                    </MenuItem>
+                    <MenuItem>
+                      <Link to="/logout">Logout</Link>
+                    </MenuItem>
+                  </span>
                 }
                 { !loggedIn &&
-                <span>
-                    <NavLinkItem to="/login" label="Login" />&mdash;
-                    <NavLinkItem to="/signup" label="Signup" />
-                </span>
+                  <span>
+                    <MenuItem>
+                      <NavLinkItem to="/login" label="Login" />
+                    </MenuItem>
+                    <MenuItem>
+                      <NavLinkItem to="/signup" label="Signup" />
+                    </MenuItem>
+                  </span>
                 }
-            </div>
-            <div>
-                {children}
-            </div>
-        </div>
-    );
-};
+              </Menu>
+            </Toolbar>
+          </AppBar>
+        </header>
+      </div>
+      <div>
+        {children}
+      </div>
+    </MuiThemeProvider>
+  );
+}
 
 export default NavItems;
